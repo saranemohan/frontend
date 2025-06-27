@@ -1,7 +1,7 @@
 import { Product } from '../model/product';
 import { ProductInput } from '../validation/productSchema';
 
-const API_URL = 'https://api.example.com/products'; // External API
+const API_URL = 'http://localhost:6001/api/product/create'; // External API
 
 export async function createProduct(input: ProductInput): Promise<Product> {
   const res = await fetch(API_URL, {
@@ -18,5 +18,6 @@ export async function createProduct(input: ProductInput): Promise<Product> {
     throw new Error(error.message || 'API error');
   }
 
-  return await res.json();
+const json = await res.json();
+return json.data;
 }
