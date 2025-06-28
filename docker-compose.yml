@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: app-frontend
+    restart: always
+    ports:
+      - '3000:3000'
