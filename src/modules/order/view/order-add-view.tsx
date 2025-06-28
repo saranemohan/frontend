@@ -4,19 +4,14 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { ProductInput, productSchema } from "../validation/productSchema";
-import { createProduct } from "../services/productService";
+import { OrderInput, orderSchema } from "../validation/orderSchema";
+import { createOrder } from "../services/orderService";
 
-const initialForm: ProductInput = {
-    title: '',
-    price: 0,
-    description: '',
-    category: "11",
-    manufacture: "12",
-    color: "13",
-    size: "14",
-    quantity: "15",
-    expiry: "2026-01-02"
+const initialForm: OrderInput = {
+    security: '',
+    transactionType: '',
+    quantity: 0,
+    orderValue: 0,
 };
 
 /**
@@ -24,7 +19,7 @@ const initialForm: ProductInput = {
 */
 export default function ProductAddView() {
 
-    const [formData, setFormData] = useState<ProductInput>(initialForm);
+    const [formData, setFormData] = useState<OrderInput>(initialForm);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -33,7 +28,7 @@ export default function ProductAddView() {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: name === 'price' ? parseFloat(value) || 0 : value,
+            [name]: (name === 'quantity' || name === 'orderValue') ? parseFloat(value) || 0 : value,
         }));
     };
 
@@ -43,7 +38,7 @@ export default function ProductAddView() {
         setErrors({});
         setLoading(true);
 
-        const validation = productSchema.safeParse(formData);
+        const validation = orderSchema.safeParse(formData);
 
         if (!validation.success) {
             const fieldErrors: Record<string, string> = {};
@@ -57,8 +52,8 @@ export default function ProductAddView() {
         }
 
         try {
-            const created = await createProduct(validation.data);
-            setMessage(`✅ Product "${created.title}" added successfully.`);
+            const created = await createOrder(validation.data);
+            setMessage(`✅ Order added successfully.`);
             setFormData(initialForm);
         } catch (err) {
             setMessage(`Error: ${(err as Error).message}`);
@@ -73,20 +68,24 @@ export default function ProductAddView() {
                 <DialogTrigger asChild><Button>Add</Button></DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Add Product</DialogTitle>
+                        <DialogTitle>Create Order</DialogTitle>
                     </DialogHeader>
 
-                    <Label>Title</Label>
-                    <Input type="text" name="title" value={formData.title} onChange={handleChange} />
-                    {errors.title && <p className="text-red-500">{errors.title}</p>}
+                    <Label>Security</Label>
+                    <Input type="text" name="security" value={formData.security} onChange={handleChange} />
+                    {errors.security && <p className="text-red-500">{errors.security}</p>}
 
-                    <Label>Price</Label>
-                    <Input type="text" name="price" value={formData.price} onChange={handleChange} />
-                    {errors.price && <p className="text-red-500">{errors.price}</p>}
+                    <Label>Transaction Type</Label>
+                    <Input type="text" name="transactionType" value={formData.transactionType} onChange={handleChange} />
+                    {errors.transactionType && <p className="text-red-500">{errors.transactionType}</p>}
 
-                    <Label>Description</Label>
-                    <Input type="text" name="description" value={formData.description} onChange={handleChange} />
-                    {errors.description && <p className="text-red-500">{errors.description}</p>}
+                    <Label>Order Value</Label>
+                    <Input type="text" name="orderValue" value={formData.orderValue} onChange={handleChange} />
+                    {errors.orderValue && <p className="text-red-500">{errors.orderValue}</p>}
+
+                    <Label>Quantity</Label>
+                    <Input type="text" name="quantity" value={formData.quantity} onChange={handleChange} />
+                    {errors.quantity && <p className="text-red-500">{errors.quantity}</p>}
 
                     <DialogFooter className="flex sm:flex-col">
                         <div className="flex flex-row justify-end">

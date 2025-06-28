@@ -24,8 +24,8 @@ const items = [
     icon: LayoutDashboard,
   },
   {
-    title: "Products",
-    url: "/dashboard/products",
+    title: "Order",
+    url: "/dashboard/order-create",
     icon: Package,
   }
 ]

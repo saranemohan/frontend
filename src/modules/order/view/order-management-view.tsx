@@ -1,15 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
-import ProductAddView from "./product-add-view";
+import OrderAddView from "./order-add-view";
 
 /**
 * 
 */
-export default function ProductManagementView() {
+export default function OrderManagementView() {
     return (
         <>
         <Card className="flex w-full">
             <CardContent>
-                <ProductAddView/>
+                <OrderAddView/>
 
             </CardContent>
         </Card>
