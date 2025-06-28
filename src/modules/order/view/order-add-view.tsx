@@ -8,10 +8,10 @@ import { OrderInput, orderSchema } from "../validation/orderSchema";
 import { createOrder } from "../services/orderService";
 
 const initialForm: OrderInput = {
-    security: '',
-    transactionType: '',
-    quantity: 0,
-    orderValue: 0,
+    security: '685fd64afda8fad90879516d',
+    transactionType: 'BUY',
+    quantity: 1,
+    orderValue: 1000,
 };
 
 /**
@@ -76,6 +76,29 @@ export default function ProductAddView() {
                     {errors.security && <p className="text-red-500">{errors.security}</p>}
 
                     <Label>Transaction Type</Label>
+
+                    {/* <Select
+                        name="transactionType"
+                        value={formData.transactionType}
+                        onValueChange={(value) =>
+                            setFormData((prev) => ({
+                                ...prev,
+                                transactionType: value,
+                            }))
+                        }
+                    >
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Transaction Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Transaction Type</SelectLabel>
+                                <SelectItem value="BUY">BUY</SelectItem>
+                                <SelectItem value="SELL">SELL</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select> */}
+
                     <Input type="text" name="transactionType" value={formData.transactionType} onChange={handleChange} />
                     {errors.transactionType && <p className="text-red-500">{errors.transactionType}</p>}
 
