@@ -1,4 +1,4 @@
-import { Home, Inbox, LayoutDashboard, Package } from "lucide-react"
+import { Home, LayoutDashboard, Package } from "lucide-react"
 
 import {
   Sidebar,

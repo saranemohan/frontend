@@ -52,7 +52,7 @@ export default function ProductAddView() {
         }
 
         try {
-            const created = await createOrder(validation.data);
+            await createOrder(validation.data);
             setMessage(`✅ Order added successfully.`);
             setFormData(initialForm);
         } catch (err) {
